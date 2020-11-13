@@ -14,8 +14,8 @@ class main_window:
         self.root = Tk()
         self.root.title("Main Window")
         self.width = 600 * difficulty
-        self.height = 480
-        self.root.geometry("%dx%d" %(self.width , self.height))
+        self.dimensions = str(self.width) + "x" + str(self.height)
+        self.root.geometry(self.dimensions)
 
     def button(self, column, row, button_number, color):
 
