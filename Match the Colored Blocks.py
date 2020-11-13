@@ -1,94 +1,56 @@
-from tkinter import * # for GUI
-import random # randomly pick color
+from tkinter import *
+from random import choice
 
 
-colors = ["red", "blue", "green", "yellow", "purple", "cyan"] # list of colors
-red_numb = 0
-blue_numb = 0
-green_num = 0
-yellow_numb = 0
-purple_numb = 0
-cyan_numb = 0
-root = Tk() # main window
-root.geometry("600x480") # resolution of the program when its starts
-root.title("Main window") # title of the program
+colors_list = ["red", "blue", "green", "yellow", "purple", "cyan"]
+button_number = 0
+total_colors = []
 row = 0
 column = 0
-i = 0
+difficulty = 1
 
-def button(row, column, buttonnumb, color): # function to place buttons
-    button = Button(root, text=("Button",buttonnumb), command= lambda : colored_blocked(row, column, buttonnumb, color),
-                    height=10, width=20, bg="black") # place the buttons and show the colored blocks when clicked
-    button.grid(column=row, row=column) # display the buttons
+class main_window:
+    def __init__(self):
+        self.root = Tk()
+        self.root.title("Main Window")
+        self.width = 600 * difficulty
+        self.height = 480
+        self.root.geometry("%dx%d" %(self.width , self.height))
 
-def colored_blocked(row, column, buttonnumb, color): # funtion for showing the coloreed blocks when button is clicked
-    print(row, column, buttonnumb, color) # which row and column is the block and which button number and color
-    canvas = Canvas(root, bg=color, height=100, width=100) # place the colored blocks
-    canvas.grid(column=row, row=column) # show the colored block
-def check_color(color1, color2): # Incomplete
-    if color1 == color2:
-        print("same color")
-def same_color(totalcolor, color): # check if colors are repeated
-    print(totalcolor, color)
-    while totalcolor >= 4:
-        print(colors)
-        d = random.choice(colors) # randomly pick another color
-        return d
-    else:
+    def button(self, column, row, button_number, color):
+
+        button = Button(text= ("Button", button_number), bg = "black",
+                        width = 20, height = 10, command = lambda : [self.canvas(column, row, color)
+                                                                        ], activebackground = color)
+        button.grid(column = column, row = row)
+
+    def no_more_than_two_colors(self, color):
+
+        while total_colors.count(color) >= (2 * difficulty):
+            color = choice(colors_list)
         return color
 
-for c in colors*2: # loop to create 12 buttons and colored blocks
-    c = random.choice(colors) # randomly select colored blocks, c is the color
-    if c == 'red': # check if there are more than 2 red blocks
-        red_numb += 1
-        if red_numb > 1:
-            colors.remove(c)
-            c = same_color(red_numb, c)
-    elif c == "blue": # check if there are more than 2 blue blocks
-        blue_numb += 1
-        if blue_numb > 1:
-            colors.remove(c)
-            c = same_color(blue_numb, c)
-    elif c == "green": # check if there are more than 2 green blocks
-        green_num += 1
-        if green_num > 1:
-            colors.remove(c)
-            c = same_color(green_num, c)
-    elif c == "yellow": # check if there are more than 2 yellow blocks
-        yellow_numb += 1
-        if yellow_numb > 1:
-            colors.remove(c)
-            c = same_color(yellow_numb, c)
-    elif c == "purple": # check if there are more than 2 purple blocks
-        purple_numb += 1
-        if purple_numb > 1:
-            colors.remove(c)
-            c = same_color(purple_numb, c)
-    elif c == "cyan": # check if there are more than 2 cyan blocks
-        cyan_numb += 1
-        if cyan_numb > 1:
-            colors.remove(c)
-            c = same_color(cyan_numb, c)
-    if i <= 2: # place 3 buttons and colored blocks in first row
-        button(row, column,i,c)
-        column += 1
-    elif  3 <= i <= 5: # place 3 buttons and colored blocks in second row
-        if i == 3:
-            column = 0
-        row = 1
-        button(row, column,i,c)
-        column += 1
-    elif 6 <= i <= 8: # place 3 buttons and colored blocks in third row
-        if i == 6:
-            column = 0
-        row = 2
-        button(row, column,i,c)
-        column += 1
-    elif 9 <= i <= 11: # place 3 buttons and colored blocks in fourth row
-        if i == 9:
-            column = 0
-        row = 3
-        button(row, column,i,c)
-        column += 1
-    i += 1 # this the button number
-root.mainloop() # display the GUI
+    def canvas(self, column, row, color):
+        canvas = Canvas(self.root,bg = color, width = 145, height = 150)
+        canvas.grid(column = column, row = row)
+        return
+
+window = main_window()
+
+for color in colors_list*2 * difficulty:
+    color = choice(colors_list)
+
+    color = window.no_more_than_two_colors(color)
+    if button_number%3 == 0:
+        row += 1
+        column = 0
+        window.button(row, column, button_number, color)
+    else:
+        window.button(row, column, button_number, color)
+    column +=1
+    total_colors += [color]
+    button_number += 1
+
+
+print(total_colors)
+window.root.mainloop()
