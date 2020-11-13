@@ -5,6 +5,7 @@ from random import choice
 colors_list = ["red", "blue", "green", "yellow", "purple", "cyan"]
 button_number = 0
 total_colors = []
+stored_colors = []
 row = 0
 column = 0
 difficulty = 1
@@ -14,13 +15,14 @@ class main_window:
         self.root = Tk()
         self.root.title("Main Window")
         self.width = 600 * difficulty
+        self.height = 480
         self.dimensions = str(self.width) + "x" + str(self.height)
         self.root.geometry(self.dimensions)
 
-    def button(self, column, row, button_number, color):
+    def button(self, column, row, button_number, color, stored):
 
         button = Button(text= ("Button", button_number), bg = "black",
-                        width = 20, height = 10, command = lambda : [self.canvas(column, row, color)
+                        width = 20, height = 10, command = lambda : [self.canvas(column, row, color, stored)
                                                                         ], activebackground = color)
         button.grid(column = column, row = row)
 
@@ -30,10 +32,12 @@ class main_window:
             color = choice(colors_list)
         return color
 
-    def canvas(self, column, row, color):
+    def canvas(self, column, row, color, stored):
         canvas = Canvas(self.root,bg = color, width = 145, height = 150)
         canvas.grid(column = column, row = row)
-        return
+        stored += [color]
+        print(stored)
+        return stored
 
 window = main_window()
 
@@ -44,9 +48,9 @@ for color in colors_list*2 * difficulty:
     if button_number%3 == 0:
         row += 1
         column = 0
-        window.button(row, column, button_number, color)
+        window.button(row, column, button_number, color, stored_colors)
     else:
-        window.button(row, column, button_number, color)
+        window.button(row, column, button_number, color, stored_colors)
     column +=1
     total_colors += [color]
     button_number += 1
