@@ -14,10 +14,6 @@ class main_window:
     def __init__(self):
         self.root = Tk()
         self.root.title("Main Window")
-        self.width = 600 * difficulty
-        self.height = 480
-        self.dimensions = str(self.width) + "x" + str(self.height)
-        self.root.geometry(self.dimensions)
 
     def button(self, column, row, button_number, color, stored):
 
@@ -48,9 +44,8 @@ for color in colors_list*2 * difficulty:
     if button_number%3 == 0:
         row += 1
         column = 0
-        window.button(row, column, button_number, color, stored_colors)
-    else:
-        window.button(row, column, button_number, color, stored_colors)
+    window.button(row, column, button_number, color, stored_colors)
+
     column +=1
     total_colors += [color]
     button_number += 1
