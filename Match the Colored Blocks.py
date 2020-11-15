@@ -1,7 +1,6 @@
 from tkinter import *
 from random import choice
 
-
 colors_list = ["red", "blue", "green", "yellow", "purple", "cyan"]
 button_number = 0
 total_colors = []
