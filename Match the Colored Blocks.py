@@ -23,7 +23,6 @@ class main_window:
         button.grid(column = column, row = row)
 
     def no_more_than_two_colors(self, color):
-
         while total_colors.count(color) >= (2 * difficulty):
             color = choice(colors_list)
         return color
