@@ -39,7 +39,6 @@ window = main_window()
 
 for color in colors_list*2 * difficulty:
     color = choice(colors_list)
-
     color = window.no_more_than_two_colors(color)
     if button_number%3 == 0:
         row += 1
@@ -49,7 +48,6 @@ for color in colors_list*2 * difficulty:
     column +=1
     total_colors += [color]
     button_number += 1
-
 
 print(total_colors)
 window.root.mainloop()
