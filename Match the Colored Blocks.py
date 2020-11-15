@@ -43,7 +43,6 @@ for color in colors_list*2 * difficulty:
         row += 1
         column = 0
     window.button(row, column, button_number, color, stored_colors)
-
     column +=1
     total_colors += [color]
     button_number += 1
