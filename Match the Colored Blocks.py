@@ -11,7 +11,7 @@ difficulty = 1
 
 "Color_list is list of all possible unique colors."
 "Button_number is the total blocks present on the game."
-"Total_colors is all the colors of the game in order of the button_number."
+"Total_colors is all the colors of the game in the order of the button_number."
 "Stored_colors stores the colors from the blocks which the user has picked."
 "Difficulty controls the number of blocks the game creates."
 
