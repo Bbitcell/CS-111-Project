@@ -1,7 +1,7 @@
 from tkinter import *
 from random import choice
 
-colors_list = ["red", "blue", "green", "yellow", "purple", "cyan"]
+colors_list = []
 button_number = 0
 total_colors = []
 stored_colors = []
@@ -11,7 +11,7 @@ difficulty = 1
 
 "Color_list is list of all possible unique colors."
 "Button_number is the total blocks present on the game."
-"Total_colors is all the colors of the game in the order of the button_number."
+"Total_colors is all the colors of the game in order of the button_number."
 "Stored_colors stores the colors from the blocks which the user has picked."
 "Difficulty controls the number of blocks the game creates."
 
@@ -26,39 +26,67 @@ class main_window:
 
     def button(self, column, row, button_number, color, stored):
         button = Button(text=("Button", button_number), bg="black",
-                        width=20, height=10, command=lambda: [self.canvas(column, row, color, stored)
+                        width=19, height=9, command=lambda: [self.canvas(column, row, color, stored)
                                                               ], activebackground=color)
         button.grid(column=column, row=row)
 
     "The function below checks and replaces if any randomly picked color from the color_list is not the same."
-    "The difficulty increases the number of same colors allowed."
 
     def no_more_than_two_colors(self, color):
-        while total_colors.count(color) >= (2 * difficulty):
+        while total_colors.count(color) > 1:
             color = choice(colors_list)
         return color
 
     "The function below places a canvas when the button is clicked."
     "The function below then stores the color of the canvas to the stored list."
-    "We need to create a list of canvases the user opened to delete them when user picks wrong colors."
+    "We need to create a list of canvases the user opened to delete them when user picks the wrong colors."
     "Then create the if statements to compare to zeroth color with first color in the stored (stored_colors)"
     "We will do this later."
 
     def canvas(self, column, row, color, stored):
-        canvas = Canvas(self.root, bg=color, width=145, height=150)
+        canvas = Canvas(self.root, bg=color, width=139, height=142)
         canvas.grid(column=column, row=row)
         stored += [color]
         print(stored)
         return stored
 
+    "The function below randomly generates color in a rgb format: (c(), c(), c())."
+    "Then rgb format is converted into a hexadecimal format."
+
+    def random_color(self):
+        c = lambda : choice(range(255))
+        rgb = (c(),c(),c())
+        mycolor = '#%02x%02x%02x' % rgb
+
+        "Stores the color in the colors_list and returns it."
+
+        return mycolor
+
 
 window = main_window()
 "Creates a main window for the game"
 
-"The for loop below creates buttons and canvas based the number of the unique colors multiplied by 2."
-"This changes depending on the difficulty the user has picked."
+"The for loop below randomly generates eight unique colors from the random_color()."
+"The number of uniques colors changes depending on the difficulty."
 
-for color in colors_list * 2 * difficulty:
+for color in range(8 * difficulty):
+    color = window.random_color()
+    colors_list += [color]
+
+    "The for loop below checks that if any color is same in the color_list"
+    "Then the for loop replaces the color with another color until it is a unique color in the color_list"
+
+    for color_in_list in colors_list:
+        position = colors_list.index(color_in_list)
+
+        "Position identifies the index of the color in the color_list so that if it can be replaced"
+
+        while 1 < colors_list.count(color_in_list):
+            colors_list[position] = window.random_color()
+
+"The for loop below creates buttons and canvas based the number of the unique colors multiplied by 2."
+
+for color in colors_list * 2:
 
     "Then the for loop randomly picks a color from the color_list."
 
@@ -70,7 +98,8 @@ for color in colors_list * 2 * difficulty:
 
     "The if statement is used to create widgets on the first three column (The button number can be used as well)."
 
-    if column % 3 == 0:
+    if column % 4 == 0:
+
         "Then create widgets on the first three columns of the next row."
 
         row += 1
