@@ -80,7 +80,7 @@ for color in colors_list * 2:
 
     color = choice(colors_list)
 
-    "Then the function no_more_than_two_colors is called to check and randomly replace the same color."
+    "Then the function no_more_than_two_colors is called to check and randomly replace same color."
 
     color = window.no_more_than_two_colors(color)
 
