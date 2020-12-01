@@ -1,7 +1,8 @@
 from tkinter import *
+from tkinter import messagebox
 from random import choice
 
-colors_list = []
+colors_list = ["red", "blue", "green", "cyan", "magenta", "purple", "orange", "yellow"]
 button_number = 0
 total_colors = []
 stored_colors = []
@@ -10,6 +11,7 @@ column = 0
 canvas_list = []
 succes_colors = []
 difficulty = 1
+
 
 "Color_list is list of all possible unique colors."
 "Button_number is the total blocks present on the game."
@@ -30,7 +32,8 @@ class main_window:
 
         button = Button(text=("Button", button_number), bg="black",
                         width=19, height=9,
-                        command=lambda: [self.canvas(column, row, color, canvas_list, store, succes_colors)
+                        command=lambda: [
+                            self.canvas(column, row, color, canvas_list, store, succes_colors)
                                          ], activebackground=color)
         button.grid(column=column, row=row)
 
@@ -51,38 +54,23 @@ class main_window:
         canvas = Canvas(self.root, bg=color, width=139, height=142)
         canvas.grid(column=column, row=row)
         canvas_list += [canvas]
-        stored_colors += [color]
-
-
-
+        stored_colors.append(color)
+        if len(stored_colors) == 2:
+            if stored_colors[1] == stored_colors[0]:
+                succes_colors += canvas_list
+            else:
+                for x in succes_colors:
+                    if x in canvas_list:
+                        canvas_list.remove(x)
+                if len(canvas_list) == 2:
+                    for c in canvas_list:
+                        c.destroy()
+                canvas_list.clear()
+            stored_colors.clear()
         return canvas_list, succes_colors
-
-    "The function below randomly generates color in a rgb format: (c(), c(), c())."
-    "Then rgb format is converted into a hexadecimal format."
-
-    def random_color(self):
-        c = lambda: choice(range(255))
-        rgb = (c(), c(), c())
-        mycolor = '#%02x%02x%02x' % rgb
-
-        "Stores the color in the colors_list and returns it."
-
-        return mycolor
-
 
 window = main_window()
 "Creates a main window for the game"
-
-"The for loop below randomly generates eight unique colors from the random_color()."
-"The number of uniques colors changes depending on the difficulty."
-
-for color in range(8 * difficulty):
-    color = window.random_color()
-    colors_list += [color]
-    for color_in_list in colors_list:
-        position = colors_list.index(color_in_list)
-        while 1 < colors_list.count(color_in_list):
-            colors_list[position] = window.random_color()
 
 "The for loop below creates buttons and canvas based the number of the unique colors multiplied by 2."
 
