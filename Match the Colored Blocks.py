@@ -48,9 +48,8 @@ class main_window:
     '''
     The function below places a canvas when the button is clicked.
     The function below then stores the color of the canvas to the stored list.
-    We need to create a list of canvases the user opened to delete them when user picks the wrong colors.
-    Then create the if statements to compare to zeroth color with first color in the stored (stored_colors)
-    We will do this later.
+    Then create a list of canvases the user opened to delete them when user picks the wrong colors.
+    Then create the if statements to compare to first color with the second color in the stored_colors.
     '''
 
     def canvas(self, column, row, color, canvas_list, stored_colors, matched_canvas):
