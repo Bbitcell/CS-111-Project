@@ -90,12 +90,12 @@ class main_window:
                 for one__canvas in matched_canvas:
 
                     '''
-                    Then create a if statement that checks if the canvas(x) from the matched_canvas is in the
+                    Then create a if statement that checks if the canvas(one__canvas) from the matched_canvas is in the
                     canvas_list 
                     '''
 
                     if one__canvas in canvas_list:
-                        # If true then remove the canvas(x) from the canvas_list.
+                        # If true then remove the canvas(one__canvas) from the canvas_list.
 
                         canvas_list.remove(one__canvas)
 
