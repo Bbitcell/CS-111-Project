@@ -16,6 +16,7 @@ Color_list is list of all possible unique colors.
 Button_number is the total blocks present on the game.
 Total_colors is all the colors of the game in order of the button_number.
 Stored_colors stores the colors from the blocks which the user has picked.
+Matched_canvas stores the canvas which the user has matched the same colors.
 '''
 
 
@@ -38,12 +39,7 @@ class main_window:
                         ], activebackground=color)
         button.grid(column=column, row=row)
 
-    # The function below checks and replaces if any randomly picked color from the color_list is not same.
 
-    def no_more_than_two_colors(self, color):
-        while total_colors.count(color) > 1:
-            color = choice(colors_list)
-        return color
 
     '''
     The function below places a canvas when the button is clicked.
@@ -70,7 +66,7 @@ class main_window:
 
             # There is another if statement to check if the color of the second canvas is same as the first canvas.
 
-            if stored_colors[1] == stored_colors[0]:
+            if stored_colors[0] == stored_colors[1]:
 
                 # If true then create a windows which tells the user that the colors match.
 
@@ -110,6 +106,13 @@ class main_window:
             stored_colors.clear()
         return canvas_list, matched_canvas
 
+    # The function below checks and replaces if any randomly picked color from the color_list is not same.
+
+    def no_more_than_two_colors(self, color):
+        while total_colors.count(color) > 1:
+            color = choice(colors_list)
+        return color
+
 
 window = main_window()
 
@@ -129,10 +132,10 @@ for color in colors_list * 2:
 
     color = window.no_more_than_two_colors(color)
 
-    # The if statement is used to create widgets on the first three column (The button number can be used as well).
+    # The if statement is used to create widgets on the first four column (The button number can be used as well).
 
     if column % 4 == 0:
-        # Then create widgets on the first three columns of the next row.
+        # Then create widgets on the first four columns of the next row.
 
         row += 1
         column = 0
@@ -148,7 +151,7 @@ for color in colors_list * 2:
 
     column += 1
 
-    # The total_colors stores the colors in the order of the button_numbers(total columns)
+    # The total_colors stores the colors in the order of the button_numbers
 
     total_colors += [color]
 
